@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
@@ -5,9 +7,16 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Counter increments smoke test', () async {
-    final text = await _spawnAndReceive('Calvin');
-    print('Received String $text');
+  group('test', () {
+    test('old way for isolate', () async {
+      final text = await _spawnAndReceive('Calvin');
+      print('Received String $text');
+    });
+
+    test('new way for isolate', () async {
+      final text = await Isolate.run(() => _getGreeting('Calvin'));
+      print('Received String $text');
+    });
   });
 }
 
